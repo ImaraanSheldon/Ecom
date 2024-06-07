@@ -58,32 +58,38 @@ let products = JSON.parse(localStorage.getItem("products")) || [
 
   // Save products to localStorage
   localStorage.setItem("products", JSON.stringify(products));
-
+//   Date on footer
+  document.querySelector('[current-year]').textContent = new Date().getUTCFullYear()
   
   // Function to display recent products
-  function recentProducts() {
-    try{
-    let arrSize = products.length
-    let latestProducts = products.slice(0, arrSize >> 1); // Slice the array to get the latest 3 products
-    let wrapper = document.querySelector('[data-info]');
+ // Function to display recent products
+function recentProducts() {
+    try {
+      let arrSize = products.length;
+      let latestProducts = products.slice(0, arrSize >> 1); // Slice the array to get the latest 3 products
+      let wrapper = document.querySelector('[data-info]');
   
-    products.forEach(product => {
-      wrapper.innerHTML += `
-        <div class="col-3">
-          <img src="${product.artwork_Img}" alt="${product.artwork_Name}">
-          <div class="d-flex flex-column">
-            <p>${product.artwork_Name}</p>
-            <p>${product.artwork_Artist}</p>
-            <p>$${product.artwork_Price}</p>
+      latestProducts.forEach(product => {
+        wrapper.innerHTML += `
+          <div class="col-3">
+            <img src="${product.artwork_Img}" alt="${product.artwork_Name}">
+            <div class="d-flex flex-column">
+              <p>${product.artwork_Name}</p>
+              <p>${product.artwork_Artist}</p>
+              <p>$${product.artwork_Price}</p>
+            </div>
           </div>
-        </div>
-      `
-    }catch(e){
-        wrapper.innerHTML = "Please Contact Our Administrator"
+        `;
+      });
+    } catch (e) {
+      let wrapper = document.querySelector('[data-info]');
+      wrapper.innerHTML = "Please Contact Our Administrator";
+      setTimeout(() =>{
+        location.reload(), 2000
+      })
     }
-    
-    });
   }
   
   // Call the function to display recent products
   recentProducts();
+
